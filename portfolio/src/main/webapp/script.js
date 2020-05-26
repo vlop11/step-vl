@@ -17,7 +17,8 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+      ['Lady Bird', 'Spider-Man: Into the Spider-Verse', 'Dickinson', 
+      'Parasite', 'Bumblebee', 'The Edge of Seventeen', 'Booksmart', 'True Grit'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -26,3 +27,5 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+console.log("THIS IS A TEST. CAN YOU SEE THIS MESSAGE?");
