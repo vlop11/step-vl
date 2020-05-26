@@ -8,18 +8,30 @@
   margin-top: 20px;
 }
 
+.heading {
+    font-family: helvetica;
+}
+
 h1 {
+    text-align: center;
+}
+
+.paragraph {
     font-family: helvetica;
 }
 
-p {
-    font-family: helvetica;
-}
-
-button {
+.list {
     font-family: helvetica;
 }
 
 #greeting-container {
     font-family: helvetica;
+}
+
+.project-links {
+    text-decoration: none;
+}
+
+.project-links:hover {
+    text-decoration: underline;
 }
