@@ -27,5 +27,3 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
-
-console.log("THIS IS A TEST. CAN YOU SEE THIS MESSAGE?");

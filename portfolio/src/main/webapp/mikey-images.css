@@ -15,3 +15,12 @@
 .paragraph {
     font-family: helvetica;
 }
+
+#mikey-container {
+    width: 500px;
+    height: 815px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    }
+
