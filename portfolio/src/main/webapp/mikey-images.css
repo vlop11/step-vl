@@ -17,9 +17,7 @@
 }
 
 #mikey-container {
-    width: 500px;
-    height: 815px;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
     }
