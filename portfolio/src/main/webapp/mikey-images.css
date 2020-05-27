@@ -1,0 +1,17 @@
+#content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 650px;
+}
+
+.heading {
+    font-family: helvetica;
+}
+
+#title-heading {
+    text-align: center;
+}
+
+.paragraph {
+    font-family: helvetica;
+}
