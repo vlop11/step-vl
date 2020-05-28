@@ -4,6 +4,11 @@
   width: 650px;
 }
 
+#selfie {
+    display: block;
+    margin: auto;
+}
+
 #greeting-container {
   margin-top: 20px;
 }
@@ -34,4 +39,25 @@
 
 .project-links:hover {
     text-decoration: underline;
+}
+
+#sm-heading {
+    margin-bottom: 10px;
+}
+
+.icon-container {
+    padding: 8px;
+}
+
+.icon {
+    width: 25px;
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+.sm-text {
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
 }
