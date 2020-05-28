@@ -17,8 +17,29 @@
 }
 
 #mikey-container {
+    width: 650px;
+    height: 650px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
     }
 
+#caption-container {
+    text-align: center;
+}
+
+#mikey-caption {
+    width: 400px;
+    display: inline-block;
+}
+
+#home-container {
+    width: 650px;
+    position: absolute;
+    bottom: 10px;
+    text-align: center;
+}
+
+#home-link {
+    display: inline-block;
+}
