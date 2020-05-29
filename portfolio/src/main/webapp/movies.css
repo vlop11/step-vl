@@ -94,9 +94,15 @@ body {
     bottom: 10px;
     text-align: center;
     flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 100vw;
+    background-color: #d8d8d8d9;
 }
 
-#home-link {
-    display: inline-block;
-    font-size: 11pt;
+.home {
+    color: black;
+    width: 100px;
 }
