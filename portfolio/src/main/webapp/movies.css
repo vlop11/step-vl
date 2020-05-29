@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+}
+
+.header {
+    width: 100vw;
+    height: 10vh;
+    background-color: #292626d9;
+}
+
+#title-heading {
+    text-align: center;
+    color: white;
+    margin: 0;
+    padding-top: 33px;
+    font-size: 36pt;
+}
+
+#content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 750px;
+}
+
+.heading {
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+}
+
+.paragraph {
+    font-family: helvetica;
+}
+
+.movie-image {
+    padding-top: 16px;
+    width: 650px;
+    height: 370px;
+    object-fit: cover;
+}
+
+.movie-caption {
+    font-family: helvetica;
+}
