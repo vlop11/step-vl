@@ -1,36 +1,64 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+body {
+    margin: 0;
+}
+
+.header {
+    width: 100vw;
+    height: 420px;
+    background-color: #292626d9;
+}
+
+#title-heading {
+    text-align: center;
+    color: white;
+    margin-top: 0;
+    margin-bottom: 10px;
+    padding-top: 40px; 
+    font-size: 40pt;
 }
 
 #selfie {
     display: block;
     margin: auto;
+    border-radius: 50%;
+    width: 250px;
 }
 
-#greeting-container {
-  margin-top: 20px;
+#content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 750px;
 }
 
 .heading {
-    font-family: helvetica;
-}
-
-#title-heading {
-    text-align: center;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .paragraph {
     font-family: helvetica;
+    font-size: 14pt;
 }
 
 .list {
     font-family: helvetica;
+    font-size: 14pt;
 }
 
-#greeting-container {
-    font-family: helvetica;
+.btn {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    font-size: 12pt;
+    color: white;
+    background-color: #dd4b47;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    float: right;
+}
+
+.btn:hover {
+    background-color: #b50601;
 }
 
 .project-links {

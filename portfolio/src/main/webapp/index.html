@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <title>Valeria's Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
     <script src="script.js"></script>
   </head>
   <body>
-    <div id="content">
+    <div class="header">
         <h1 class="heading" id="title-heading">Valeria's Portfolio</h1>
-        
         <img id="selfie" src="/images/selfie.jpg" width="400">
+    </div>
+
+    <div id="content">        
         <p class="paragraph">Hi! My name is Valeria, and this is my portfolio page. I am currently a STEP intern at Google
           for the summer of 2020. I attend Georgia Tech in Atlanta, Georgia, and I am a second-year student
           studying computer science. In my free time, I like to watch movies and TV shows. I don't like to 
@@ -18,16 +21,24 @@
           Lady Bird I don't know).
         </p>
 
-        <p class="paragraph">Click here to get a random movie that I've seen since quarantine (I've had a lot of time):</p>
+        <h2 class="heading">My Movie Recs</h2>
+        <p class="paragraph">I currently have a running thread on Twitter on the movies I've watched while in quarantine, but
+            I also created a short little list of some of my favorites that I've seen. If you're looking to kill your boredom,
+            this is a good start!
+        </p>
+        <a href="movies.html"><button class="btn">Movie List →</button></a><br>
+
+        <!-- <p class="paragraph">Click here to get a random movie that I've seen since quarantine (I've had a lot of time):</p>
         <button class="paragraph" onclick="addRandomGreeting()">Get a movie</button>
-        <div id="greeting-container"></div>
+        <div id="greeting-container"></div> -->
 
         <h2 class="heading">Mikey Gallery</h2>
         <p class="paragraph">Anybody that knows me knows how much I love my dog, Mikey. My family's had him since
             I was nine years old, so Mikey's been in my life for a majority of the time that I've been alive. The 
             thing about Mikey is that he isn't like a <i>normal</i> dog. I highly recommend you check out
-            <a href="mikey-images.html">this</a> image gallery of Mikey to understand what I'm talking about.
+            the image gallery of Mikey to understand what I'm talking about.
         </p>
+        <a href="mikey-images.html"><button class="btn">Mikey Gallery →</button></a><br>
 
         <h2 class="heading">Shameless Plugs</h2>
         <p class="paragraph">If you wanna check out some of my projects:</p>

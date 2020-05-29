@@ -9,24 +9,34 @@
     </head>
 
     <body>
-        <div id="content">
-            <h1 class="heading" id="title-heading">The Mikey Collection</h1>
-            
-            <p class="paragraph">Alright I'll just come out and say it... because
-            I am not ashamed. Mikey is ugly. Just accept this fact of life. Mikey is 
-            ugly, it's cute. He does gross, weird things. Sometimes he's very annoying,
-            but it's fine. Regardless, he's a HILARIOUS dog. You could literally
-            just watch him (and we have) and still be entertained. Have fun looking
-            at Mikey at his best (worst?) moments!
-            </p>
+        <div id="outer-container">
+            <div class="header">
+                <h1 class="heading" id="title-heading">The Mikey Collection</h1>
+            </div>
 
-            <button class="paragraph" onclick="displayMikeyImage()">RANDOM MIKEY!</button><br><br>
-            <div id="mikey-container"></div>
-            <div id="caption-container"><p class="paragraph" id="mikey-caption"></p></div>
+            <div id="content">    
+                <p class="paragraph">Alright I'll just come out and say it... because
+                I am not ashamed. Mikey is ugly. Just accept this fact of life. Mikey is 
+                ugly, it's cute. He does gross, weird things. Sometimes he's very annoying,
+                but it's fine. Regardless, he's a HILARIOUS dog. You could literally
+                just watch him (and we have) and still be entertained. Have fun looking
+                at Mikey at his best (worst?) moments!
+                </p>
 
-            <div id="home-container"><p class="paragraph" id="home-link">Please take me back to <a href="index.html">home</a></p></div>
-
+                <div id="btn-container">
+                    <button class="btn" onclick="displayMikeyImage()">Random Mikey!</button>
+                </div>
+                <br>
+                
+                <div id="mikey-container"></div>
+                <div id="caption-container"><p class="paragraph" id="mikey-caption"></p></div>
+            </div>
         </div>
+
+        <div id="home-container">
+            <p class="paragraph" id="home-link">Please take me back to <a href="index.html">home</a></p>
+        </div>
+
     </body>
 
 </html>
