@@ -2,17 +2,83 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>Valeria's Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
     <script src="script.js"></script>
   </head>
+
   <body>
-    <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+    <div id="outer-container">
+        <div class="header">
+            <h1 class="heading" id="title-heading">Valeria's Portfolio</h1>
+            <img id="selfie" src="/images/selfie.jpg" width="400">
+        </div>
+
+        <div id="content">        
+            <p class="paragraph">Hi! My name is Valeria, and this is my portfolio page. I am currently a STEP intern at Google
+            for the summer of 2020. I attend Georgia Tech in Atlanta, Georgia, and I am a second-year student
+            studying computer science. In my free time, I like to watch movies and TV shows. I don't like to 
+            pick favorites, <i>but</i> if I had to, it'd probably be Spider-Man: Into the Spider-Verse (or 
+            Lady Bird I don't know).
+            </p>
+
+            <h2 class="heading">My Movie Recs</h2>
+            <p class="paragraph">I currently have a running thread on Twitter on the movies I've watched while in quarantine, but
+                I also created a short little list of some of my favorites that I've seen. If you're looking to kill your boredom,
+                this is a good start!
+            </p>
+
+            <div class="btn-container">
+                <a href="movies.html"><button class="btn">Movie List →</button></a>
+            </div>
+
+            <!-- <p class="paragraph">Click here to get a random movie that I've seen since quarantine (I've had a lot of time):</p>
+            <button class="paragraph" onclick="addRandomGreeting()">Get a movie</button>
+            <div id="greeting-container"></div> -->
+
+            <h2 class="heading">Mikey Gallery</h2>
+            <p class="paragraph">Anybody that knows me knows how much I love my dog, Mikey. My family's had him since
+                I was nine years old, so Mikey's been in my life for a majority of the time that I've been alive. The 
+                thing about Mikey is that he isn't like a <i>normal</i> dog. I highly recommend you check out
+                the image gallery of Mikey to understand what I'm talking about.
+            </p>
+
+            <div class="btn-container">
+                <a href="mikey-images.html"><button class="btn">Mikey Gallery →</button></a>
+            </div>
+
+            <h2 class="heading">Shameless Plugs</h2>
+            <p class="paragraph">If you wanna check out some of my projects:</p>
+            <ul>
+                <li class="list">U-Reach: If you're a college student in Georgia, this is the webapp for you.
+                    U-Reach allows you to connect with other students on your campus who share the same 
+                    interests as you. Reach us at <a class="project-links" href="http://www.u-reach.appspot.com">u-reach.appspot.com.</a>
+                </li><br>
+                <li class="list">Vote it, poll it!: Made during a very political season, this webapp was made to 
+                    make it easier for people to be involved in our democracy. During election season,
+                    you'll get a rundown of what's on your ballot and resources to help you get to know
+                    each candidate. Check it out at <a class="project-links" href="http://www.vote-it-poll-it.appspot.com">vote-it-poll-it.appspot.com.</a>
+                </li><br>
+                <li class="list">PlayShare: I always say PlayShare is my brainchild because it was the first project I
+                    designed, coded, and built all by myself. If you love music, but you're sick of hearing the 
+                    same old playlist, PlayShare will allow you to create random playlists based around a theme.
+                    You can also share your playlists, so that others can see what you're listening to. Music 
+                    sharing is at your fingertips at <a class="project-links" href="https://my-playshare.appspot.com">my-playshare.appspot.com.</a>
+                </li>
+            </ul>
+        </div>
     </div>
+
+    <div id="footer">
+        <!-- <h2 class="heading" id="sm-heading">Check me out @</h2> -->
+        <div class="icon-container">
+            <a href="https://www.linkedin.com/in/valeria-lopez-a89935155"><img class="icon" src="images/LI-bug.png" /><p class="paragraph sm-text">LinkedIn</p></a>
+        </div>
+        <div class="icon-container">
+            <a href="https://github.com/vlop11"><img class="icon" src="images/GH-bug.png" /><p class="paragraph sm-text">GitHub</p></a>
+        </div>
+</div>
+
   </body>
 </html>
