@@ -89,8 +89,60 @@ body {
     padding: 10px;
 }
 
+#comment-form {
+    text-align: center;
+}
+
+#input-container {
+    width: 750px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#text-field {
+    border: none;
+    border-left: solid;
+    border-width: 3px;
+    border-color: #b50601;
+    background-color: #d8d8d83d;
+    width: 750px;
+}
+
+#submit-btn {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    font-size: 12pt;
+    color: white;
+    background-color: #dd4b47;
+    border: none;
+    padding: 5px 8px;
+    border-radius: 5px;
+    position: absolute;
+    right: 5px;
+}
+
+#comments-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.comment {
+    font-family: helvetica;
+    font-size: 11pt;
+    margin: 5px 0px;
+    padding: 10px;
+    border-left: solid;
+    border-width: 3px;
+    border-color: #b50601;
+    background-color: #d8d8d83d;
+}
+
 #home-container {
-    margin-top: 100px;
+    margin-top: 50px;
     bottom: 10px;
     text-align: center;
     flex-shrink: 0;
