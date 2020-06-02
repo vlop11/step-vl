@@ -2,6 +2,7 @@ var slideIndex = 1;
 
 function initial() {
     showImage(slideIndex);
+    displayList();
 }
 
 function moveImage(n) {
@@ -27,4 +28,17 @@ function showImage(n) {
 
     images[slideIndex - 1].style.display = "block";
     captions[slideIndex - 1].style.display = "block";
+}
+
+function displayList() {
+    fetch('/data').then(response => response.json()).then(json => {
+        const container = document.getElementById("comments-container");
+        
+        for (var i = 0; i < json.length; i++) {
+            var p = document.createElement("P");
+            p.classList.add("comment");
+            p.innerText = json[i];
+            container.appendChild(p);
+        }
+    });
 }
