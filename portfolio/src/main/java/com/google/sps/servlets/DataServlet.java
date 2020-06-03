@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.WebServlet;
+import java.util.List;
 import java.util.ArrayList;
 
 
@@ -29,13 +30,16 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    int maxComments = Integer.parseInt(request.getParameter("max-comments"));
+
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    PreparedQuery results = datastore.prepare(query);
+    PreparedQuery pq = datastore.prepare(query);
+    List<Entity> resultsList = pq.asList(FetchOptions.Builder.withLimit(maxComments));
 
     ArrayList<String> comments = new ArrayList<>();
-    for (Entity entity : results.asIterable()) {
+    for (Entity entity : resultsList) {
         String text = (String) entity.getProperty("text");
 
         comments.add(text);

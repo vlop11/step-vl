@@ -39,9 +39,14 @@ function showImage(n) {
 }
 
 function displayList() {
-    fetch('/data').then(response => response.json()).then(json => {
-        const container = document.getElementById("comments-container");
-        
+    var maxCont = document.getElementById("selectMax");
+    var maxComment = maxCont.options[maxCont.selectedIndex].value;
+    var urlString = "/data?max-comments=" + maxComment;
+    
+    const container = document.getElementById("comments-section");
+    container.innerHTML = "";
+
+    fetch(urlString).then(response => response.json()).then(json => {
         for (var i = 0; i < json.length; i++) {
             var p = document.createElement("P");
             p.classList.add("comment");
