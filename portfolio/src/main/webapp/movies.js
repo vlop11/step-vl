@@ -1,4 +1,10 @@
-var slideIndex = 1;
+var slideIndex;
+
+if (sessionStorage.getItem("currMovie") != null) {
+    slideIndex = parseInt(sessionStorage.getItem("currMovie"));
+} else {
+    slideIndex = 1;
+}
 
 function initial() {
     showImage(slideIndex);
@@ -10,7 +16,7 @@ function moveImage(n) {
     showImage(slideIndex);
 }
 
-function showImage(n) {
+function showImage(n) {    
     var images = document.getElementsByClassName("movie-image");
     var captions = document.getElementsByClassName("movie-caption");
 
@@ -28,6 +34,8 @@ function showImage(n) {
 
     images[slideIndex - 1].style.display = "block";
     captions[slideIndex - 1].style.display = "block";
+
+    sessionStorage.setItem("currMovie", slideIndex);
 }
 
 function displayList() {
