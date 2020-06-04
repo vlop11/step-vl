@@ -104,12 +104,15 @@
                     <option value="15">15</option>
                     <option value="20">20</option>
                 </select>
+
+                <button onclick="deleteComments()">Delete all comments</button>
                 
                 <div id="comments-container">
                     <form id="comment-form" action="/data" method="POST">
 
                         <div id="input-container">
                             <input class="comment" id="text-field" type="text" name="comment" autocomplete="off" placeholder="Add a comment...">
+                            <input id="curr-movie" name="movie" style="display:none" value="">
                             <button id="submit-btn" type="submit">Post</button>
                         </div>
 

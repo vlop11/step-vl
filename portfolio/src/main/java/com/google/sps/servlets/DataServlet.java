@@ -15,7 +15,7 @@
 package com.google.sps.servlets;
 
 import com.google.appengine.api.datastore.*;
-import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Query.*;
 import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.http.*;
@@ -31,10 +31,12 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     int maxComments = Integer.parseInt(request.getParameter("max-comments"));
-
-    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    int movie = Integer.parseInt(request.getParameter("movie"));
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    
+    Filter movieFilter = new FilterPredicate("movie", FilterOperator.EQUAL, movie);
+    Query query = new Query("Comment").setFilter(movieFilter).addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery pq = datastore.prepare(query);
     List<Entity> resultsList = pq.asList(FetchOptions.Builder.withLimit(maxComments));
 
@@ -60,16 +62,17 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     long timestamp = System.currentTimeMillis();
     String comment = this.getComment(request);
+    int movie = Integer.parseInt(request.getParameter("movie"));
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("timestamp", timestamp);
     commentEntity.setProperty("text", comment);
+    commentEntity.setProperty("movie", movie);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
 
     response.sendRedirect("/movies.html");
-
   }
 
   private String getComment(HttpServletRequest request) {
