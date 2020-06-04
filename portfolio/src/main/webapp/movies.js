@@ -7,8 +7,6 @@ if (sessionStorage.getItem("currSlide") != null) {
 }
 
 function initial() {
-    var currMovie = document.getElementById("curr-movie");
-    currMovie.value = slideIndex;
     showImage(slideIndex);
 }
 
@@ -37,6 +35,7 @@ function showImage(n) {
     captions[slideIndex - 1].style.display = "block";
 
     sessionStorage.setItem("currSlide", slideIndex);
+    document.getElementById("curr-movie").value = slideIndex;
     
     displayList();
 }
@@ -55,14 +54,13 @@ function displayList() {
             container.appendChild(p);
             p.innerText = json[i];
             p.classList.add("comment");
-            
         }
     });
 
 }
 
 function deleteComments() {
-    fetch("/delete-data", {
+    fetch("/delete-data?movie=" + slideIndex, {
         method: "POST"
     }).then(response => displayList(slideIndex));
 }

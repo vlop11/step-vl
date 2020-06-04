@@ -25,18 +25,19 @@ import java.util.ArrayList;
 
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/data")
+@WebServlet(urlPatterns = "/data")
 public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     int maxComments = Integer.parseInt(request.getParameter("max-comments"));
-    int movie = Integer.parseInt(request.getParameter("movie"));
+    String movie = request.getParameter("movie");
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     
-    Filter movieFilter = new FilterPredicate("movie", FilterOperator.EQUAL, movie);
-    Query query = new Query("Comment").setFilter(movieFilter).addSort("timestamp", SortDirection.DESCENDING);
+    // Filter movieFilter = new FilterPredicate("movie", FilterOperator.EQUAL, movie);
+    // Query query = new Query("Comment").setFilter(movieFilter).addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query(movie).addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery pq = datastore.prepare(query);
     List<Entity> resultsList = pq.asList(FetchOptions.Builder.withLimit(maxComments));
 
@@ -62,12 +63,13 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     long timestamp = System.currentTimeMillis();
     String comment = this.getComment(request);
-    int movie = Integer.parseInt(request.getParameter("movie"));
+    String movie = request.getParameter("curr-movie");
 
-    Entity commentEntity = new Entity("Comment");
+    // Entity commentEntity = new Entity("Comment");
+    Entity commentEntity = new Entity(movie);
     commentEntity.setProperty("timestamp", timestamp);
     commentEntity.setProperty("text", comment);
-    commentEntity.setProperty("movie", movie);
+    // commentEntity.setProperty("movie", movie);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
