@@ -36,8 +36,8 @@
 
                     <div id="image-container">
 
-                        <button class="btn" id="prev" onclick="moveImage(-1)">&#10094;</button>
-                        <button class="btn" id="next" onclick="moveImage(1)">&#10095;</button>
+                        <button class="nav-btn" id="prev" onclick="moveImage(-1)">&#10094;</button>
+                        <button class="nav-btn" id="next" onclick="moveImage(1)">&#10095;</button>
 
                         <img class="movie-image" src="https://m.media-amazon.com/images/M/MV5BMTkxMDQxNjk2MF5BMl5BanBnXkFtZTcwMjIwNzM5Nw@@._V1_SX1500_CR0,0,1500,999_AL_.jpg" /> <!-- Pitch Perfect -->
                         <img class="movie-image" src="https://m.media-amazon.com/images/M/MV5BMTgwOTk0NjQzM15BMl5BanBnXkFtZTgwMjY2Njc5NjM@._V1_SX1777_CR0,0,1777,931_AL_.jpg" /> <!-- Bumblee -->
@@ -98,14 +98,16 @@
 
                 </div>
 
-                <select name="max-comments" id="selectMax" onchange="displayList()">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                </select>
+                <div id="btns-container">
+                    <select id="selectMax" name="max-comments" onchange="displayList()">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
 
-                <button onclick="deleteComments()">Delete all comments</button>
+                    <button id="delete-btn" onclick="deleteComments()">Delete all comments</button>
+                </div>
                 
                 <div id="comments-container">
                     <form id="comment-form" action="/data" method="POST">
@@ -113,7 +115,7 @@
                         <div id="input-container">
                             <input class="comment" id="text-field" type="text" name="comment" autocomplete="off" placeholder="Add a comment...">
                             <input id="curr-movie" name="curr-movie" style="display:none">
-                            <button id="submit-btn" type="submit">Post</button>
+                            <button class="btn" type="submit">Post</button>
                         </div>
 
                     </form>
