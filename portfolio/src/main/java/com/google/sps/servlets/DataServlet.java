@@ -16,6 +16,8 @@ package com.google.sps.servlets;
 
 import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.datastore.Query.*;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,15 +38,17 @@ public class DataServlet extends HttpServlet {
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     
+    // keeping this just in case I need a filter for future reference
     // Filter movieFilter = new FilterPredicate("movie", FilterOperator.EQUAL, movie);
     // Query query = new Query("Comment").setFilter(movieFilter).addSort("timestamp", SortDirection.DESCENDING);
+    
     Query query = new Query(movie).addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery pq = datastore.prepare(query);
     List<Entity> resultsList = pq.asList(FetchOptions.Builder.withLimit(maxComments));
 
     ArrayList<String> comments = new ArrayList<>();
     for (Entity entity : resultsList) {
-        String text = (String) entity.getProperty("text");
+        String text = (String) entity.getProperty("email") + ": " + entity.getProperty("text");
 
         comments.add(text);
     }
@@ -65,11 +69,13 @@ public class DataServlet extends HttpServlet {
     String comment = request.getParameter("comment");
     String movie = request.getParameter("curr-movie");
 
-    // Entity commentEntity = new Entity("Comment");
+    UserService userService = UserServiceFactory.getUserService();
+    String userEmail = userService.getCurrentUser().getEmail();
+
     Entity commentEntity = new Entity(movie);
     commentEntity.setProperty("timestamp", timestamp);
+    commentEntity.setProperty("email", userEmail);
     commentEntity.setProperty("text", comment);
-    // commentEntity.setProperty("movie", movie);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
