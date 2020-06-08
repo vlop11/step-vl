@@ -1,8 +1,8 @@
 body {
-    height: 100vh;
-    margin: 0;
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    margin: 0;
 }
 
 #outer-container {
@@ -10,24 +10,24 @@ body {
 }
 
 .header {
-    width: 100vw;
-    height: 420px;
     background-color: #292626d9;
+    height: 420px;
+    width: 100vw;
 }
 
 #title-heading {
-    text-align: center;
     color: white;
-    margin-top: 0;
-    margin-bottom: 10px;
-    padding-top: 40px; 
     font-size: 40pt;
+    margin-bottom: 10px;
+    margin-top: 0;
+    padding-top: 40px;
+    text-align: center; 
 }
 
 #selfie {
+    border-radius: 50%;
     display: block;
     margin: auto;
-    border-radius: 50%;
     width: 250px;
 }
 
@@ -57,17 +57,17 @@ body {
 }
 
 .btn {
-    width: fit-content;
-    margin: auto;
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: bold;
-    font-size: 12pt;
-    color: white;
     background-color: #dd4b47;
     border: none;
-    padding: 8px;
     border-radius: 5px;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12pt;
+    font-weight: bold;
+    margin: auto;
+    padding: 8px;
+    text-align: center;
+    width: fit-content;
 }
 
 .btn:hover {
@@ -83,14 +83,14 @@ body {
 }
 
 #footer {
-    flex-shrink: 0;
-    height: 100px;
-    width: 100vw;
-    margin-top: 100px;
-    display: flex;
-    justify-content: center;
     align-items: center;
     background-color: #d8d8d8d9;
+    display: flex;
+    flex-shrink: 0;
+    height: 100px;
+    justify-content: center;
+    margin-top: 100px;
+    width: 100vw;
 }
 
 #sm-heading {
@@ -98,9 +98,9 @@ body {
 }
 
 .icon-container {
+    justify-content: space-around;
     padding: 15px;
     text-align: center;
-    justify-content: space-around;
 }
 
 icon-link:visited {
@@ -108,15 +108,15 @@ icon-link:visited {
 }
 
 .icon {
-    width: 25px;
     display: inline-block;
-    vertical-align: middle;
     padding-right: 5px;
+    vertical-align: middle;
+    width: 25px;
 }
 
 .sm-text {
+    color: black;
     display: inline-block;
     margin: 0;
     vertical-align: middle;
-    color: black;
 }

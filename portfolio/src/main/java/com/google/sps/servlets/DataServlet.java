@@ -18,11 +18,12 @@ import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.datastore.Query.*;
 import com.google.gson.Gson;
 import java.io.IOException;
-import javax.servlet.http.*;
-import javax.servlet.annotation.WebServlet;
-import java.util.List;
 import java.util.ArrayList;
-
+import java.util.List;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet(urlPatterns = "/data")
@@ -54,15 +55,14 @@ public class DataServlet extends HttpServlet {
 
   private String convertToJSON(ArrayList<String> arr) {
     Gson gson = new Gson();
-    String json = gson.toJson(arr);
     
-    return json;
+    return gson.toJson(arr);
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     long timestamp = System.currentTimeMillis();
-    String comment = this.getComment(request);
+    String comment = request.getParameter("comment");
     String movie = request.getParameter("curr-movie");
 
     // Entity commentEntity = new Entity("Comment");
@@ -75,11 +75,5 @@ public class DataServlet extends HttpServlet {
     datastore.put(commentEntity);
 
     response.sendRedirect("/movies.html");
-  }
-
-  private String getComment(HttpServletRequest request) {
-    String comment = request.getParameter("comment");
-
-    return comment;
   }
 }

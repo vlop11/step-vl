@@ -12,32 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// function displayList() {
-//     fetch('/data').then(response => response.json()).then(json => {
-//         const container = document.getElementById("text-container");
-//         container.innerText = "" + json[0] + json[1] + json[2];
-//     });
-// }
-
 function getServerText() {
-    console.log("Fetching text...");
-
     const responsePromise = fetch("/data");
 
     responsePromise.then(promiseText);
 }
 
 function promiseText(promiseResponse) {
-    console.log("Handling the response...");
-
     const textPromise = promiseResponse.text();
 
     textPromise.then(addToDOM);
 }
 
 function addToDOM(textPromise) {
-    console.log("Adding to DOM...");
-
     const container = document.getElementById("text-container");
     container.innerHTML = textPromise;
 }

@@ -4,10 +4,10 @@ import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.io.IOException;
-import javax.servlet.http.*;
-import javax.servlet.annotation.WebServlet;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
 
 @WebServlet("/delete-data")
 public class DeleteServlet extends HttpServlet {
