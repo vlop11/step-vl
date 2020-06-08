@@ -5,7 +5,7 @@ function displayMikeyImage() {
 
     // const mikeyImage = mikeyImages[Math.floor(Math.random() * mikeyImages.length)];
 
-    var imageCaptions = {1: "He just... sat on our game board. He has a bed - I don't get it.", 
+    const imageCaptions = {1: "He just... sat on our game board. He has a bed - I don't get it.", 
     2: "He's just so tiny, everything else looks so big. Like a giant kingdom.",
     3: "Sometimes we literally put him in a purse in order to bring him inside stores. Peep \
     his little paw 🥺",
@@ -29,7 +29,6 @@ function displayMikeyImage() {
     17: "I seriously don't understand why this dog is so bad at pictures."}
     
     const randNum = Math.floor(Math.random()* 17 + 1);
-    console.log("Rand num: " + randNum);
 
     const mikeyContainer = document.getElementById('mikey-container');
     const mikeyCaption = document.getElementById('mikey-caption');

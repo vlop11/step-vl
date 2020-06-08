@@ -36,8 +36,8 @@
 
                     <div id="image-container">
 
-                        <button class="btn" id="prev" onclick="moveImage(-1)">&#10094;</button>
-                        <button class="btn" id="next" onclick="moveImage(1)">&#10095;</button>
+                        <button class="nav-btn" id="prev" onclick="moveImage(-1)">&#10094;</button>
+                        <button class="nav-btn" id="next" onclick="moveImage(1)">&#10095;</button>
 
                         <img class="movie-image" src="https://m.media-amazon.com/images/M/MV5BMTkxMDQxNjk2MF5BMl5BanBnXkFtZTcwMjIwNzM5Nw@@._V1_SX1500_CR0,0,1500,999_AL_.jpg" /> <!-- Pitch Perfect -->
                         <img class="movie-image" src="https://m.media-amazon.com/images/M/MV5BMTgwOTk0NjQzM15BMl5BanBnXkFtZTgwMjY2Njc5NjM@._V1_SX1777_CR0,0,1777,931_AL_.jpg" /> <!-- Bumblee -->
@@ -97,6 +97,35 @@
                     weren't enough to already make this an amazing film, the score is just WOW.<br><br>10/10 (wish I could give it more)</p>
 
                 </div>
+
+                <div id="btns-container">
+                    <select id="selectMax" name="max-comments" onchange="displayList()">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+
+                    <button id="delete-btn" onclick="deleteComments()">Delete all comments</button>
+                    <a id="logout-btn"><button class="btn">Logout</button></a>
+                </div>
+                
+                <div id="comments-container">
+                    <form id="comment-form" action="/data" method="POST">
+
+                        <div id="input-container">
+                            <input class="comment" id="text-field" type="text" name="comment" autocomplete="off" placeholder="Add a comment...">
+                            <input id="curr-movie" name="curr-movie" style="display:none">
+                            <button id="post-btn" class="btn" type="submit">Post</button>
+                            <a id ="login-btn"><button class="btn">Login</button></a>
+                        </div>
+
+                    </form>
+
+                    <div id="comments-section">
+                    </div>
+                </div>
+
             </div>
         </div>
 

@@ -1,4 +1,10 @@
-var slideIndex = 1;
+var slideIndex;
+
+if (sessionStorage.getItem("currSlide") != null) {
+    slideIndex = parseInt(sessionStorage.getItem("currSlide"));
+} else {
+    slideIndex = 1;
+}
 
 function initial() {
     showImage(slideIndex);
@@ -9,7 +15,7 @@ function moveImage(n) {
     showImage(slideIndex);
 }
 
-function showImage(n) {
+function showImage(n) {    
     var images = document.getElementsByClassName("movie-image");
     var captions = document.getElementsByClassName("movie-caption");
 
@@ -27,4 +33,34 @@ function showImage(n) {
 
     images[slideIndex - 1].style.display = "block";
     captions[slideIndex - 1].style.display = "block";
+
+    sessionStorage.setItem("currSlide", slideIndex);
+    document.getElementById("curr-movie").value = slideIndex;
+    
+    displayList();
+}
+
+function displayList() {
+    var maxCont = document.getElementById("selectMax");
+    var maxComment = maxCont.options[maxCont.selectedIndex].value;
+    var urlString = "/data?max-comments=" + maxComment + "&movie=" + slideIndex;
+    
+    const container = document.getElementById("comments-section");
+    container.innerHTML = "";
+
+    fetch(urlString).then(response => response.json()).then(json => {
+        for (var i = 0; i < json.length; i++) {
+            var p = document.createElement("P");
+            container.appendChild(p);
+            p.innerText = json[i];
+            p.classList.add("comment");
+        }
+    });
+
+}
+
+function deleteComments() {
+    fetch("/delete-data?movie=" + slideIndex, {
+        method: "POST"
+    }).then(response => displayList(slideIndex));
 }

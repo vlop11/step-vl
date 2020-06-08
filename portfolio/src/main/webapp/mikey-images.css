@@ -1,8 +1,8 @@
 body {
-    height: 100vh;
-    margin: 0;
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    margin: 0;
 }
 
 #outer-container {
@@ -10,17 +10,17 @@ body {
 }
 
 .header {
-    width: 100vw;
-    height: 125px;
     background-color: #292626d9;
+    height: 125px;
+    width: 100vw;
 }
 
 #title-heading {
-    text-align: center;
     color: white;
+    font-size: 36pt;
     margin: 0;
     padding-top: 33px;
-    font-size: 36pt;
+    text-align: center;
 }
 
 #content {
@@ -44,15 +44,15 @@ body {
 }
 
 .btn {
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: bold;
-    font-size: 12pt;
-    color: white;
     background-color: #dd4b47;
     border: none;
-    padding: 8px;
     border-radius: 5px;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12pt;
+    font-weight: bold;
+    padding: 8px;
+    text-align: center;
 }
 
 .btn:hover {
@@ -60,11 +60,11 @@ body {
 }
 
 #mikey-container {
-    width: 750px;
-    height: 750px;
-    background-size: contain;
-    background-repeat: no-repeat;
     background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 750px;
+    width: 750px;
 }
 
 #caption-container {
@@ -72,25 +72,24 @@ body {
 }
 
 #mikey-caption {
-    width: 400px;
     display: inline-block;
+    width: 400px;
 }
 
 #home-container {
-    margin-top: 100px;
-    bottom: 10px;
-    text-align: center;
-    flex-shrink: 0;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    height: 50px;
-    width: 100vw;
     background-color: #d8d8d8d9;
+    bottom: 10px;
+    display: flex;
+    flex-shrink: 0;
+    height: 50px;
+    justify-content: center;
+    margin-top: 100px;
+    text-align: center;
+    width: 100vw;
 }
 
 .home {
     color: black;
     width: 100px;
 }
-
