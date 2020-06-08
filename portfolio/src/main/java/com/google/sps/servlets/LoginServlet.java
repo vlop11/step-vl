@@ -27,7 +27,7 @@ public class LoginServlet extends HttpServlet {
         } else {
             responseList.add("false");
 
-            String loginUrl = userService.createLoginURL("/login");
+            String loginUrl = userService.createLoginURL("/movies.html");
             responseList.add(loginUrl);
         }
 

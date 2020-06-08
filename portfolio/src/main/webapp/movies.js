@@ -62,7 +62,18 @@ function displayList() {
 
 function getLoginStatus() {
     fetch("/login").then(reponse => reponse.json()).then(json => {
-        // do something here; not sure yet
+        if (json[0] == "true") {
+            const postButton = document.getElementById("post-btn");
+            postButton.style.display = "block";
+
+            const logoutButton = document.getElementById("logout-btn");
+            logoutButton.style.display = "block";
+            logoutButton.href = json[1];
+        } else {
+            const loginButton = document.getElementById("login-btn");
+            loginButton.style.display = "block";
+            loginButton.href = json[1];
+        }
     });
 }
 

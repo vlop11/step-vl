@@ -174,9 +174,9 @@ body {
     text-align: center;
 }
 
-/* #post-btn {
-    display: none;
-} */
+#login-btn, #logout-btn {
+    text-decoration: none;
+}
 
 #home-container {
     align-items: center;
