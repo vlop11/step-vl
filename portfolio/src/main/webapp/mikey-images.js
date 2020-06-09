@@ -38,3 +38,29 @@ function displayMikeyImage() {
     mikeyContainer.style.backgroundImage = picURL;
     mikeyCaption.innerText = imageCaptions[randNum];
 }
+
+google.charts.load('current', {'packages': ['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+    const data = new google.visualization.DataTable();
+    data.addColumn('string', 'Response');
+    data.addColumn('number', 'Count');
+    data.addRows([
+        ['Yes, absolutely', 10],
+        ['No, he\'s so cute', 5],
+        ['So ugly, it\'s cute', 15]
+    ]);
+
+    const options = {
+        'title': 'Is Mikey ugly?',
+        'width': 500,
+        'height': 400
+    };
+
+    const chart = new google.visualization.PieChart(
+        document.getElementById('chart-container')
+    );
+
+    chart.draw(data, options);
+}
