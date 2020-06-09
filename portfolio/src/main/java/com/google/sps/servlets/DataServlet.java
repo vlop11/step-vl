@@ -21,6 +21,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,18 +47,20 @@ public class DataServlet extends HttpServlet {
     PreparedQuery pq = datastore.prepare(query);
     List<Entity> resultsList = pq.asList(FetchOptions.Builder.withLimit(maxComments));
 
-    ArrayList<String> comments = new ArrayList<>();
+    ArrayList<HashMap<String, String>> comments = new ArrayList<>();
     for (Entity entity : resultsList) {
-        String text = (String) entity.getProperty("email") + ": " + entity.getProperty("text");
+        HashMap<String, String> entityMap = new HashMap<>();
+        entityMap.put("displayName", (String) entity.getProperty("email"));
+        entityMap.put("text", (String) entity.getProperty("text"));
 
-        comments.add(text);
+        comments.add(entityMap);
     }
 
     response.setContentType("application/json;");
     response.getWriter().println(convertToJSON(comments));
   }
 
-  private String convertToJSON(ArrayList<String> arr) {
+  private String convertToJSON(ArrayList<HashMap<String, String>> arr) {
     Gson gson = new Gson();
     
     return gson.toJson(arr);

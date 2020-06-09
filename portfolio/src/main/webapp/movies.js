@@ -53,7 +53,7 @@ function displayList() {
         for (let i = 0; i < json.length; i++) {
             const p = document.createElement("P");
             container.appendChild(p);
-            p.innerText = json[i];
+            p.innerHTML = "<strong>" + json[i]["displayName"] + ": </strong>" + json[i]["text"];
             p.classList.add("comment");
         }
     });
@@ -61,16 +61,16 @@ function displayList() {
 }
 
 function getLoginStatus() {
+    const postButton = document.getElementById("post-btn");
+    const logoutButton = document.getElementById("logout-btn");
+    const loginButton = document.getElementById("login-btn");
+    
     fetch("/login").then(reponse => reponse.json()).then(json => {
         if (json["Status"] == "true") {
-            const postButton = document.getElementById("post-btn");
             postButton.style.display = "block";
-
-            const logoutButton = document.getElementById("logout-btn");
             logoutButton.style.display = "block";
             logoutButton.href = json["Link"];
         } else {
-            const loginButton = document.getElementById("login-btn");
             loginButton.style.display = "block";
             loginButton.href = json["Link"];
         }
@@ -80,5 +80,5 @@ function getLoginStatus() {
 function deleteComments() {
     fetch("/delete-data?movie=" + slideIndex, {
         method: "POST"
-    }).then(response => displayList(slideIndex));
+    }).then(response => displayList());
 }
