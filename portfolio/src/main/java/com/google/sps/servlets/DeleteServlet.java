@@ -9,12 +9,17 @@ import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+/**
+* Servlet that handles the deletion of comments. When
+* the delete button is pressed, all comments for that 
+* movie are deleted.
+*/
 @WebServlet("/delete-data")
 public class DeleteServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String movie = request.getParameter("movie");
+        final String movie = request.getParameter("movie");
 
         Query query = new Query(movie);
 

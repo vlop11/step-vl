@@ -10,6 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/** 
+ * Servlet that checks whether or not the current user is 
+ * logged into their Google account. If the user is logged
+ * in, it provides a logout link. If the user is not logged
+ * in, it provides a login link. 
+ */
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
@@ -22,14 +28,13 @@ public class LoginServlet extends HttpServlet {
         if (userService.isUserLoggedIn()) {
             responseMap.put("Status", "true");
 
-            String logoutUrl = userService.createLogoutURL("/movies.html");
-            String userEmail = userService.getCurrentUser().getEmail();
+            final String logoutUrl = userService.createLogoutURL("/movies.html");
 
             responseMap.put("Link", logoutUrl);
         } else {
             responseMap.put("Status", "false");
 
-            String loginUrl = userService.createLoginURL("/movies.html");
+            final String loginUrl = userService.createLoginURL("/movies.html");
             responseMap.put("Link", loginUrl);
         }
 
