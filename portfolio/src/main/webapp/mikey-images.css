@@ -63,8 +63,6 @@ body {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
-    height: 750px;
-    width: 750px;
 }
 
 #caption-container {
@@ -74,6 +72,11 @@ body {
 #mikey-caption {
     display: inline-block;
     width: 400px;
+}
+
+#chart-container {
+    display: flex;
+    justify-content: center;
 }
 
 #home-container {

@@ -29,6 +29,8 @@ function displayMikeyImage() {
 
     const mikeyContainer = document.getElementById('mikey-container');
     const mikeyCaption = document.getElementById('mikey-caption');
+    mikeyContainer.style.width = "750px";
+    mikeyContainer.style.height = "750px";
 
     const picURL = "url(images/mikey-" + randNum + ".jpg)";
 
@@ -51,6 +53,7 @@ function drawChart() {
 
         const options = {
         'title': 'Is Mikey ugly?',
+        'titleTextStyle': {'fontSize': 20},
         'width': 500,
         'height': 400
         };
