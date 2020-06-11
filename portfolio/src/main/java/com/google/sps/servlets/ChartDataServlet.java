@@ -28,12 +28,18 @@ public class ChartDataServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final String uglyChoice = request.getParameter("ugly-choice");
+        
         int currentVotes = 0;
 
+        // if people have already voted for this category,
+        // get the number of votes already counted
         if (chartVotes.containsKey(uglyChoice)) {
             currentVotes = chartVotes.get(uglyChoice);
         }
 
+        // stores the option voted for and the current number
+        // of votes now updated to be +1 since the user voted
+        // for the category
         chartVotes.put(uglyChoice, currentVotes + 1);
 
         response.sendRedirect("/mikey-images.html");
