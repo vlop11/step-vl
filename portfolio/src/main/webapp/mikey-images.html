@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="mikey-images.css">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="mikey-images.js"></script>
     </head>
 
@@ -32,6 +33,15 @@
                 
                 <div id="mikey-container"></div>
                 <div id="caption-container"><p class="paragraph" id="mikey-caption"></p></div>
+
+                <div id="chart-container"></div>
+
+                <form action="/chart-data" method="POST" class="paragraph" style="width: fit-content; margin: auto;">
+                    <input type="radio" name="ugly-choice" value="Yes, absolutely">Yes, absolutely</input><br>
+                    <input type="radio" name="ugly-choice" value="No, he's so cute">No, he's so cute</input><br>
+                    <input type="radio" name="ugly-choice" value="So ugly, it's cute">So ugly, it's cute</input><br>
+                    <input class="btn" type="submit" value="Vote" style="margin: 8px 58px;"></input>
+                </form>
             </div>
         </div>
 
