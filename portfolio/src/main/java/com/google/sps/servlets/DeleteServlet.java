@@ -10,10 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 /**
-* Servlet that handles the deletion of comments. When
-* the delete button is pressed, all comments for that 
-* movie are deleted.
-*/
+ * Servlet that handles the deletion of comments. When
+ * the delete button is pressed, all comments for that 
+ * movie are deleted.
+ */
 @WebServlet("/delete-data")
 public class DeleteServlet extends HttpServlet {
 

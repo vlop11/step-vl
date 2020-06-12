@@ -26,15 +26,14 @@ public class LoginServlet extends HttpServlet {
         UserService userService = UserServiceFactory.getUserService();
 
         if (userService.isUserLoggedIn()) {
-            responseMap.put("Status", "true");
-
             final String logoutUrl = userService.createLogoutURL("/movies.html");
-
+            
+            responseMap.put("Status", "true");
             responseMap.put("Link", logoutUrl);
         } else {
-            responseMap.put("Status", "false");
-
             final String loginUrl = userService.createLoginURL("/movies.html");
+            
+            responseMap.put("Status", "false");
             responseMap.put("Link", loginUrl);
         }
 

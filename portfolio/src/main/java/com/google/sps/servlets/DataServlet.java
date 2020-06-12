@@ -22,9 +22,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -49,21 +46,20 @@ public class DataServlet extends HttpServlet {
     ImmutableList<Entity> resultsList = 
         new ImmutableList.Builder<Entity>().addAll(pq.asList(FetchOptions.Builder.withLimit(maxComments))).build();
 
-    ImmutableList.Builder<HashMap<String, String>> builder = new ImmutableList.Builder<>();
+    ImmutableList.Builder<Comment> builder = new ImmutableList.Builder<>();
     for (Entity entity : resultsList) {
-        HashMap<String, String> entityMap = new HashMap<>();
-        entityMap.put("displayName", (String) entity.getProperty("email"));
-        entityMap.put("text", (String) entity.getProperty("text"));
+        Comment commentObj = 
+            new Comment((String) entity.getProperty("email"), (String) entity.getProperty("text"));
 
-        builder.add(entityMap);
+        builder.add(commentObj);
     }
-    ImmutableList<HashMap<String, String>> comments = builder.build();
+    ImmutableList<Comment> comments = builder.build();
 
     response.setContentType("application/json;");
     response.getWriter().println(convertToJSON(comments));
   }
 
-  private String convertToJSON(ImmutableList<HashMap<String, String>> arr) {
+  private String convertToJSON(ImmutableList<Comment> arr) {
     Gson gson = new Gson();
     
     return gson.toJson(arr);
