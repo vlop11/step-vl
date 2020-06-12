@@ -16,44 +16,50 @@ package com.google.sps.servlets;
 
 import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.datastore.Query.*;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** 
+ * Servlet that posts comments to datastore and returns 
+ * all current posted comments according to movie when called. 
+ */
 @WebServlet(urlPatterns = "/data")
 public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    int maxComments = Integer.parseInt(request.getParameter("max-comments"));
-    String movie = request.getParameter("movie");
+    final int maxComments = Integer.parseInt(request.getParameter("max-comments"));
+    final String movie = request.getParameter("movie");
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     
-    // Filter movieFilter = new FilterPredicate("movie", FilterOperator.EQUAL, movie);
-    // Query query = new Query("Comment").setFilter(movieFilter).addSort("timestamp", SortDirection.DESCENDING);
     Query query = new Query(movie).addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery pq = datastore.prepare(query);
-    List<Entity> resultsList = pq.asList(FetchOptions.Builder.withLimit(maxComments));
+    ImmutableList<Entity> resultsList = 
+        new ImmutableList.Builder<Entity>().addAll(pq.asList(FetchOptions.Builder.withLimit(maxComments))).build();
 
-    ArrayList<String> comments = new ArrayList<>();
+    ImmutableList.Builder<Comment> builder = new ImmutableList.Builder<>();
     for (Entity entity : resultsList) {
-        String text = (String) entity.getProperty("text");
+        Comment commentObj = 
+            new Comment((String) entity.getProperty("email"), (String) entity.getProperty("text"));
 
-        comments.add(text);
+        builder.add(commentObj);
     }
+    ImmutableList<Comment> comments = builder.build();
 
     response.setContentType("application/json;");
     response.getWriter().println(convertToJSON(comments));
   }
 
-  private String convertToJSON(ArrayList<String> arr) {
+  private String convertToJSON(ImmutableList<Comment> arr) {
     Gson gson = new Gson();
     
     return gson.toJson(arr);
@@ -61,15 +67,17 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    long timestamp = System.currentTimeMillis();
-    String comment = request.getParameter("comment");
-    String movie = request.getParameter("curr-movie");
+    final long timestamp = System.currentTimeMillis();
+    final String comment = request.getParameter("comment");
+    final String movie = request.getParameter("curr-movie");
 
-    // Entity commentEntity = new Entity("Comment");
+    UserService userService = UserServiceFactory.getUserService();
+    final String userEmail = userService.getCurrentUser().getEmail();
+
     Entity commentEntity = new Entity(movie);
     commentEntity.setProperty("timestamp", timestamp);
+    commentEntity.setProperty("email", userEmail);
     commentEntity.setProperty("text", comment);
-    // commentEntity.setProperty("movie", movie);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);

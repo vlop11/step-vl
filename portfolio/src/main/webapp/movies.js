@@ -1,4 +1,4 @@
-var slideIndex;
+let slideIndex;
 
 if (sessionStorage.getItem("currSlide") != null) {
     slideIndex = parseInt(sessionStorage.getItem("currSlide"));
@@ -7,6 +7,7 @@ if (sessionStorage.getItem("currSlide") != null) {
 }
 
 function initial() {
+    getLoginStatus();
     showImage(slideIndex);
 }
 
@@ -16,8 +17,8 @@ function moveImage(n) {
 }
 
 function showImage(n) {    
-    var images = document.getElementsByClassName("movie-image");
-    var captions = document.getElementsByClassName("movie-caption");
+    const images = document.getElementsByClassName("movie-image");
+    const captions = document.getElementsByClassName("movie-caption");
 
     if (n > images.length) {
         slideIndex = 1;
@@ -26,7 +27,7 @@ function showImage(n) {
         slideIndex = images.length;
     }
 
-    for (var i = 0; i < images.length; i++) {
+    for (let i = 0; i < images.length; i++) {
         images[i].style.display = "none";
         captions[i].style.display = "none";
     }
@@ -41,26 +42,43 @@ function showImage(n) {
 }
 
 function displayList() {
-    var maxCont = document.getElementById("selectMax");
-    var maxComment = maxCont.options[maxCont.selectedIndex].value;
-    var urlString = "/data?max-comments=" + maxComment + "&movie=" + slideIndex;
+    const selectMaxContainer = document.getElementById("selectMax");
+    const maxComment = selectMaxContainer.options[selectMaxContainer.selectedIndex].value;
+    const urlString = "/data?max-comments=" + maxComment + "&movie=" + slideIndex;
     
     const container = document.getElementById("comments-section");
     container.innerHTML = "";
 
     fetch(urlString).then(response => response.json()).then(json => {
-        for (var i = 0; i < json.length; i++) {
-            var p = document.createElement("P");
+        for (let i = 0; i < json.length; i++) {
+            const p = document.createElement("P");
             container.appendChild(p);
-            p.innerText = json[i];
+            p.innerHTML = "<strong>" + json[i]["displayName"] + ": </strong>" + json[i]["text"];
             p.classList.add("comment");
         }
     });
 
 }
 
+function getLoginStatus() {
+    const postButton = document.getElementById("post-btn");
+    const logoutButton = document.getElementById("logout-btn");
+    const loginButton = document.getElementById("login-btn");
+    
+    fetch("/login").then(reponse => reponse.json()).then(json => {
+        if (json["Status"] == "true") {
+            postButton.style.display = "block";
+            logoutButton.style.display = "block";
+            logoutButton.href = json["Link"];
+        } else {
+            loginButton.style.display = "block";
+            loginButton.href = json["Link"];
+        }
+    });
+}
+
 function deleteComments() {
     fetch("/delete-data?movie=" + slideIndex, {
         method: "POST"
-    }).then(response => displayList(slideIndex));
+    }).then(response => displayList());
 }
