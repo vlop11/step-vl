@@ -23,10 +23,8 @@ public final class FindMeetingQuery {
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
         final long meetingDuration = request.getDuration(); // in minutes
         Collection<String> requestAttendees = request.getAttendees();
-        Collection<String> optionalAttendees = request.getOptionalAttendees();
 
         Collection<TimeRange> availableTimes = new ArrayList<>();
-        Collection<TimeRange> optionalTimes = new ArrayList<>();
 
         if (meetingDuration > TimeRange.WHOLE_DAY.duration()) {
             return availableTimes;
@@ -36,7 +34,6 @@ public final class FindMeetingQuery {
             return availableTimes;
         }
 
-        System.out.println("Done------------------------------");
         for (Event event : events) {
             TimeRange when = event.getWhen();
             Set<String> eventAttendees = event.getAttendees();
@@ -54,10 +51,6 @@ public final class FindMeetingQuery {
             // creates TimeRange available before and after event
             TimeRange availableBefore = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, when.start(), false);
             TimeRange availableAfter = TimeRange.fromStartEnd(when.end(), TimeRange.END_OF_DAY, true);
-
-            // System.out.println("Before range: " + availableBefore + " & duration: " + availableBefore.duration());
-            // System.out.println("After range: " + availableAfter + " & duration: " + availableAfter.duration());
-            // System.out.println("Done------------------------------");
             
             availableTimes = returnOverlaps(availableBefore, availableAfter, availableTimes, meetingDuration);
         }
@@ -80,7 +73,6 @@ public final class FindMeetingQuery {
                 int earliestEnd = range.end() < before.end() ? range.end() : before.end();
                 TimeRange overlap = TimeRange.fromStartEnd(latestStart, earliestEnd, false);
                 if (overlap.duration() >= duration) {
-                    System.out.println("Overlap range: " + overlap);
                     overlaps.add(overlap);
                 }
             }
@@ -90,7 +82,6 @@ public final class FindMeetingQuery {
                 int earliestEnd = range.start() < after.end() ? range.end() : after.start();
                 TimeRange overlap = TimeRange.fromStartEnd(latestStart, earliestEnd, false);
                 if (overlap.duration() >= duration) {
-                    System.out.println("Overlap range: " + overlap);
                     overlaps.add(overlap);
                 }
             }
