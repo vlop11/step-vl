@@ -22,35 +22,37 @@ import java.util.Set;
 public final class FindMeetingQuery {
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
         final long meetingDuration = request.getDuration(); // in minutes
-        Collection<String> requestAttendees = request.getAttendees();
+        Collection<String> mandatoryAttendees = request.getAttendees();
 
         Collection<TimeRange> availableTimes = new ArrayList<>();
 
         if (meetingDuration > TimeRange.WHOLE_DAY.duration()) {
             return availableTimes;
         }
-        if (events.size() == 0) {
+        if (events.isEmpty()) {
             availableTimes.add(TimeRange.WHOLE_DAY);
             return availableTimes;
         }
 
         for (Event event : events) {
-            TimeRange when = event.getWhen();
+            TimeRange eventRange = event.getWhen();
             Set<String> eventAttendees = event.getAttendees();
 
-            boolean hasNoCommonAttendees = Collections.disjoint(requestAttendees, eventAttendees);
+            boolean hasNoCommonAttendees = Collections.disjoint(mandatoryAttendees, eventAttendees);
              
             // if no event attendees need to go to requested meeting
             if (hasNoCommonAttendees) {
-                if (availableTimes.size() == 0) {
+                if (availableTimes.isEmpty()) {
                     availableTimes.add(TimeRange.WHOLE_DAY);
                 }
                 continue;
             }
 
             // creates TimeRange available before and after event
-            TimeRange availableBefore = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, when.start(), false);
-            TimeRange availableAfter = TimeRange.fromStartEnd(when.end(), TimeRange.END_OF_DAY, true);
+            TimeRange availableBefore = 
+                TimeRange.fromStartEnd(TimeRange.START_OF_DAY, eventRange.start(), /* inclusive= */ false);
+            TimeRange availableAfter = 
+                TimeRange.fromStartEnd(eventRange.end(), TimeRange.END_OF_DAY, /* inclusive= */ true);
             
             availableTimes = returnOverlaps(availableBefore, availableAfter, availableTimes, meetingDuration);
         }
@@ -58,35 +60,30 @@ public final class FindMeetingQuery {
         return availableTimes;
     }
 
-    private Collection<TimeRange> returnOverlaps(TimeRange before, TimeRange after, Collection<TimeRange> available, long duration) {
-        if (available.size() == 0) {
-            available.add(before);
-            available.add(after);
-            return available;
+    private Collection<TimeRange> returnOverlaps(TimeRange beforeTimeRange, TimeRange afterTimeRange, Collection<TimeRange> availableTimes, long meetingDuration) {
+        if (availableTimes.isEmpty()) {
+            availableTimes.add(beforeTimeRange);
+            availableTimes.add(afterTimeRange);
+            return availableTimes;
         }
 
         Collection<TimeRange> overlaps =  new ArrayList<>();
-        for (TimeRange range : available) {
-
-            if (range.overlaps(before)) {
-                int latestStart = range.start() < before.start() ? before.start() : range.start();
-                int earliestEnd = range.end() < before.end() ? range.end() : before.end();
-                TimeRange overlap = TimeRange.fromStartEnd(latestStart, earliestEnd, false);
-                if (overlap.duration() >= duration) {
-                    overlaps.add(overlap);
-                }
-            }
-
-            if (range.overlaps(after)) {
-                int latestStart = range.start() < after.start() ? after.start() : range.start();
-                int earliestEnd = range.start() < after.end() ? range.end() : after.start();
-                TimeRange overlap = TimeRange.fromStartEnd(latestStart, earliestEnd, false);
-                if (overlap.duration() >= duration) {
-                    overlaps.add(overlap);
-                }
-            }
+        for (TimeRange range : availableTimes) {
+            findOverlap(range, beforeTimeRange, overlaps, meetingDuration);
+            findOverlap(range, afterTimeRange, overlaps, meetingDuration);
         }
 
         return overlaps;
+    }
+
+    private void findOverlap(TimeRange alreadyAvailableRange, TimeRange eventAvailableRange, Collection<TimeRange> overlaps, long meetingDuration) {
+        if (alreadyAvailableRange.overlaps(eventAvailableRange)) {
+            int latestStart = alreadyAvailableRange.start() < eventAvailableRange.start() ? eventAvailableRange.start() : alreadyAvailableRange.start();
+            int earliestEnd = alreadyAvailableRange.end() < eventAvailableRange.end() ? alreadyAvailableRange.end() : eventAvailableRange.end();
+            TimeRange overlap = TimeRange.fromStartEnd(latestStart, earliestEnd, /* inclusive= */ false);
+            if (overlap.duration() >= meetingDuration) {
+                overlaps.add(overlap);
+            }
+        }
     }
 }
