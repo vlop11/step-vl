@@ -23,8 +23,10 @@ public final class FindMeetingQuery {
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
         final long meetingDuration = request.getDuration(); // in minutes
         Collection<String> mandatoryAttendees = request.getAttendees();
+        Collection<String> optionalAttendees = request.getOptionalAttendees();
 
         Collection<TimeRange> availableTimes = new ArrayList<>();
+        Collection<TimeRange> optionalTimes = new ArrayList<>();
 
         if (meetingDuration > TimeRange.WHOLE_DAY.duration()) {
             return availableTimes;
@@ -38,10 +40,12 @@ public final class FindMeetingQuery {
             TimeRange eventRange = event.getWhen();
             Set<String> eventAttendees = event.getAttendees();
 
-            boolean hasNoCommonAttendees = Collections.disjoint(mandatoryAttendees, eventAttendees);
+            boolean hasNoMeetingAttendees = Collections.disjoint(mandatoryAttendees, eventAttendees) && Collections.disjoint(optionalAttendees, eventAttendees);
+            // are any optional attendees attending this event
+            boolean hasOptionalAttendees = !(Collections.disjoint(optionalAttendees, eventAttendees));
              
-            // if no event attendees need to go to requested meeting
-            if (hasNoCommonAttendees) {
+            // if no event attendees need to go to requested meeting (mandatory or optional)
+            if (hasNoMeetingAttendees) {
                 if (availableTimes.isEmpty()) {
                     availableTimes.add(TimeRange.WHOLE_DAY);
                 }
@@ -54,10 +58,23 @@ public final class FindMeetingQuery {
             TimeRange availableAfter = 
                 TimeRange.fromStartEnd(eventRange.end(), TimeRange.END_OF_DAY, /* inclusive= */ true);
             
-            availableTimes = returnOverlaps(availableBefore, availableAfter, availableTimes, meetingDuration);
+            // if only mandatory attendees are in this event
+            if (!(hasOptionalAttendees)) {
+                availableTimes = returnOverlaps(availableBefore, availableAfter, availableTimes, meetingDuration);
+            } else {
+                if (availableTimes.isEmpty()) {
+                    optionalTimes = returnOverlaps(availableBefore, availableAfter, optionalTimes, meetingDuration);
+                } else {
+                    optionalTimes = returnOverlaps(availableBefore, availableAfter, availableTimes, meetingDuration);
+                }
+            }
         }
 
-        return availableTimes;
+        if (optionalTimes.isEmpty()) {
+            return availableTimes;
+        } else {
+            return optionalTimes;
+        }
     }
 
     private Collection<TimeRange> returnOverlaps(TimeRange beforeTimeRange, TimeRange afterTimeRange, Collection<TimeRange> availableTimes, long meetingDuration) {
