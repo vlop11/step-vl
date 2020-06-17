@@ -27,6 +27,7 @@ public final class FindMeetingQuery {
 
         Collection<TimeRange> availableTimes = new ArrayList<>();
         Collection<TimeRange> optionalTimes = new ArrayList<>();
+        Collection<Event> optionalOnlyEvents = new ArrayList<>();
 
         if (meetingDuration > TimeRange.WHOLE_DAY.duration()) {
             return availableTimes;
@@ -40,13 +41,16 @@ public final class FindMeetingQuery {
             TimeRange eventRange = event.getWhen();
             Set<String> eventAttendees = event.getAttendees();
 
-            boolean hasNoMeetingAttendees = Collections.disjoint(mandatoryAttendees, eventAttendees) && Collections.disjoint(optionalAttendees, eventAttendees);
+            boolean hasNoRequiredAttendees = Collections.disjoint(mandatoryAttendees, eventAttendees);
             // are any optional attendees attending this event
-            boolean hasOptionalAttendees = !(Collections.disjoint(optionalAttendees, eventAttendees));
+            boolean hasOnlyOptionalAttendees = !(Collections.disjoint(optionalAttendees, eventAttendees));
              
-            // if no event attendees need to go to requested meeting (mandatory or optional)
-            if (hasNoMeetingAttendees) {
-                if (availableTimes.isEmpty()) {
+            // if no mandatory attendees are at the event
+            if (hasNoRequiredAttendees) {
+                // if only optional attendees are at the event
+                if (hasOnlyOptionalAttendees) {
+                    optionalOnlyEvents.add(event);
+                } else if (availableTimes.isEmpty()) {
                     availableTimes.add(TimeRange.WHOLE_DAY);
                 }
                 continue;
@@ -58,18 +62,24 @@ public final class FindMeetingQuery {
             TimeRange availableAfter = 
                 TimeRange.fromStartEnd(eventRange.end(), TimeRange.END_OF_DAY, /* inclusive= */ true);
             
-            // if only mandatory attendees are in this event
-            if (!(hasOptionalAttendees)) {
-                availableTimes = returnOverlaps(availableBefore, availableAfter, availableTimes, meetingDuration);
-            } else {
-                if (availableTimes.isEmpty()) {
-                    optionalTimes = returnOverlaps(availableBefore, availableAfter, optionalTimes, meetingDuration);
-                } else {
-                    optionalTimes = returnOverlaps(availableBefore, availableAfter, availableTimes, meetingDuration);
-                }
-            }
+            availableTimes = returnOverlaps(availableBefore, availableAfter, availableTimes, meetingDuration);
         }
 
+        for (Event optionalEvent : optionalOnlyEvents) {
+            TimeRange eventRange = optionalEvent.getWhen();
+
+            TimeRange availableBefore = 
+                TimeRange.fromStartEnd(TimeRange.START_OF_DAY, eventRange.start(), /* inclusive= */ false);
+            TimeRange availableAfter = 
+                TimeRange.fromStartEnd(eventRange.end(), TimeRange.END_OF_DAY, /* inclusive= */ true);
+
+            if (!(optionalTimes.isEmpty()) || mandatoryAttendees.isEmpty()) {
+                optionalTimes = returnOverlaps(availableBefore, availableAfter, optionalTimes, meetingDuration);
+            } else {
+                optionalTimes = returnOverlaps(availableBefore, availableAfter, availableTimes, meetingDuration);
+            }
+        }
+        
         if (optionalTimes.isEmpty()) {
             return availableTimes;
         } else {

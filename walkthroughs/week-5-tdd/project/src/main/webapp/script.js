@@ -1,3 +1,4 @@
+ 
 // Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,9 +25,14 @@ function sendMeetingRequest() {
   // split it into an array of names
   const attendees = attendeesNamesString.split(/\s*,\s*/);
 
+// comma-separated list of names
+  const optionalAttendeesNamesString = document.getElementById('optional-attendees').value;
+  // split it into an array of names
+  const optionalAttendees = optionalAttendeesNamesString.split(/\s*,\s*/);
+
   // Create the request to send to the server using the data we collected from
   // the web form.
-  const meetingRequest = new MeetingRequest(duration, attendees);
+  const meetingRequest = new MeetingRequest(duration, attendees, optionalAttendees);
 
   queryServer(meetingRequest).then((timeRanges) => {
     updateResultsOnPage(timeRanges);
@@ -87,9 +93,10 @@ function timeToString(totalMinutes) {
  * Request for possible meeting times.
  */
 class MeetingRequest {
-  constructor(duration, attendees) {
+  constructor(duration, attendees, optional_attendees) {
     this.duration = duration;
     this.attendees = attendees;
+    this.optional_attendees = optional_attendees;
   }
 }
 
