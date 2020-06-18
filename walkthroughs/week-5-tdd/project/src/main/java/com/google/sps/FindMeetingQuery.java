@@ -87,7 +87,8 @@ public final class FindMeetingQuery {
         }
     }
 
-    private Collection<TimeRange> returnOverlaps(TimeRange beforeTimeRange, TimeRange afterTimeRange, Collection<TimeRange> availableTimes, long meetingDuration) {
+    private Collection<TimeRange> returnOverlaps(TimeRange beforeTimeRange, TimeRange afterTimeRange,
+                                                 Collection<TimeRange> availableTimes, long meetingDuration) {
         if (availableTimes.isEmpty()) {
             availableTimes.add(beforeTimeRange);
             availableTimes.add(afterTimeRange);
@@ -103,10 +104,11 @@ public final class FindMeetingQuery {
         return overlaps;
     }
 
-    private void findOverlap(TimeRange alreadyAvailableRange, TimeRange eventAvailableRange, Collection<TimeRange> overlaps, long meetingDuration) {
+    private void findOverlap(TimeRange alreadyAvailableRange, TimeRange eventAvailableRange,
+                             Collection<TimeRange> overlaps, long meetingDuration) {
         if (alreadyAvailableRange.overlaps(eventAvailableRange)) {
-            int latestStart = alreadyAvailableRange.start() < eventAvailableRange.start() ? eventAvailableRange.start() : alreadyAvailableRange.start();
-            int earliestEnd = alreadyAvailableRange.end() < eventAvailableRange.end() ? alreadyAvailableRange.end() : eventAvailableRange.end();
+            int latestStart = Math.max(alreadyAvailableRange.start(), eventAvailableRange.start());
+            int earliestEnd = Math.min(alreadyAvailableRange.end(), eventAvailableRange.end());
             TimeRange overlap = TimeRange.fromStartEnd(latestStart, earliestEnd, /* inclusive= */ false);
             if (overlap.duration() >= meetingDuration) {
                 overlaps.add(overlap);
