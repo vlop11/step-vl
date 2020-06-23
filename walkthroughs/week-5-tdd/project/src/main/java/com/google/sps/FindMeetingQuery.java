@@ -42,12 +42,12 @@ public final class FindMeetingQuery {
             Set<String> eventAttendees = event.getAttendees();
 
             boolean hasNoRequiredAttendees = Collections.disjoint(mandatoryAttendees, eventAttendees);
-            // are any optional attendees attending this event
+            // Are any optional attendees attending this event
             boolean hasOnlyOptionalAttendees = !(Collections.disjoint(optionalAttendees, eventAttendees));
              
-            // if no mandatory attendees are at the event
+            // If no mandatory attendees are at the event
             if (hasNoRequiredAttendees) {
-                // if only optional attendees are at the event
+                // If only optional attendees are at the event
                 if (hasOnlyOptionalAttendees) {
                     optionalOnlyEvents.add(event);
                 } else if (availableTimes.isEmpty()) {
@@ -56,7 +56,7 @@ public final class FindMeetingQuery {
                 continue;
             }
 
-            // creates TimeRange available before and after event
+            // Creates TimeRange available before and after event
             TimeRange availableBefore = 
                 TimeRange.fromStartEnd(TimeRange.START_OF_DAY, eventRange.start(), /* inclusive= */ false);
             TimeRange availableAfter = 
